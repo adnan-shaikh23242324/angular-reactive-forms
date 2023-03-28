@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
+import { CustomValidationService } from '../services/custom-validation.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -7,8 +8,23 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  userForm!: FormGroup;
-  stateOptions: string[] = ["Mumbai", "Ahmedabad", "Chennai"];
+  userForm = this.fb.group({
+    username:["",Validators.required],
+    password:["",[Validators.required,Validators.minLength(3)]],
+    confirmPassword:["",[Validators.required,Validators.minLength(3)]],
+    address:this.fb.group({
+      street:[""],
+      city:[""],
+      state:[""],
+      zip:[""]
+    })
+
+    
+  },{
+    validator:this.CustomValidator.passwordMatchValidator("password","confirmPassword")
+
+  });
+  stateOptions: string[] = ["Mumbai", "Gujarat", "Chennai","Lucknow","Hyderabad","Punjab"];
   userAddressInfo: any = {
     street: "1234 Main Street",
     city: "My City",
@@ -16,20 +32,9 @@ export class SignUpComponent implements OnInit {
     zip: "12345"
 
   }
-  constructor() { }
+  constructor(private fb:FormBuilder,private CustomValidator:CustomValidationService) {}
   ngOnInit() {
-    this.userForm = new FormGroup({
-      username: new FormControl(""),
-      password: new FormControl(""),
-      confirmPassword: new FormControl(""),
-      address: new FormGroup({
-        street: new FormControl(""),
-        city: new FormControl(""),
-        state: new FormControl(""),
-        zip: new FormControl(""),
-      })
-
-    });
+   
 
   }
   autofillAddress() {
