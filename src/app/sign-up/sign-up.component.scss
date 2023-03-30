@@ -1,0 +1,19 @@
+.thebottom{
+    background-color:#F5F5F5;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+  }
+  
+  .theleft{
+    display:flex;
+    flex-direction:column;
+  }
+  
+  .deletebtn{
+    background-color:#F24701;
+    padding:10px 25px;
+    color:#fff;
+    text-align:center;
+  }
