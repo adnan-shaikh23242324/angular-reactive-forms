@@ -33,8 +33,12 @@ export class SignUpComponent implements OnInit {
       this.daysAvailable.push(this.fb.control(""))
     }
     removeRow(i: number): void {
-      console.log(this.daysAvailable);
+      // console.log(this.daysAvailable);
+      if ((this.userForm.get('daysAvailable') as FormArray).controls.length > 1){
       this.daysAvailable.removeAt(i);}
+    }
+
+    
     get daysAvailable(){
       return this.userForm.get("daysAvailable") as FormArray;
     }
